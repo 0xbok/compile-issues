@@ -28,7 +28,7 @@ for issue in github.get_repo(REPO).get_issues():
         label = issue.labels[0].name
         if label not in issue_dict:
            issue_dict[label] = []
-        issue_dict[label].append(f"### PEPE. {label} - {issue.title} \n{issue.body}\n")
+        issue_dict[label].append(f"### $*^@^!. {label} - {issue.title}\n\n{issue.body}\n\n")
 
 with open("report.md", "w") as report:
     for label in SEVERITY_LABELS:
@@ -40,6 +40,6 @@ with open("report.md", "w") as report:
         if label in issue_dict.keys():
             for content in issue_dict[label]:
                 replaced = content.replace("\r\n", "\n")
-                replaced = replaced.replace("PEPE", f"{num}")
+                replaced = replaced.replace("$*^@^!", f"{num}")
                 report.write(replaced)
                 num += 1
