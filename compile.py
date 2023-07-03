@@ -18,6 +18,7 @@ github = Github(config.TOKEN)
 SEVERITY_LABELS = ['Critical', 'High', 'Medium', 'Low', 'Gas', 'Informational']
 
 issue_dict : dict[str, list[str]] = {}
+counters: dict[str, int] = {}
 
 for issue in github.get_repo(REPO).get_issues():
     if issue.state == 'open' and issue.pull_request is None:
@@ -28,19 +29,18 @@ for issue in github.get_repo(REPO).get_issues():
         label = issue.labels[0].name
         if label not in issue_dict:
            issue_dict[label] = []
-        issue_dict[label].append(f"### $*^@^!. {label} - {issue.title}\n\n{issue.body}\n\n")
+           counters[label] = 0
+        counters[label]+=1
+        issue_dict[label].append(f"### {counters[label]}. {label} - {issue.title} \n\n{issue.body}\n\n")
 
 with open("report.md", "w") as report:
     for label in SEVERITY_LABELS:
-        num = 1
+        if label not in issue_dict:
+            continue
         title = f"{label} Findings"
         if label == "Gas":
             title = "Gas Saving Findings"
-        report.write(f"## {title}\n\n")
-        if label in issue_dict.keys():
-            for content in issue_dict[label]:
-                replaced = content.replace("\r\n", "\n")
-                replaced = replaced.replace("$*^@^!", f"{num}")
-                report.write(replaced)
-                num += 1
+        report.write(f"## {label}\n\n")
+        for content in issue_dict[label]:
+            report.write(content.replace("\r\n", "\n"))
     report.write(f"## Final remarks\n\nTODO")
