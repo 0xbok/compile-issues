@@ -31,7 +31,7 @@ for issue in github.get_repo(REPO).get_issues():
            issue_dict[label] = []
            counters[label] = 0
         counters[label]+=1
-        issue_dict[label].append(f"### {counters[label]}. {label} - {issue.title} \n\n{issue.body}\n\n")
+        issue_dict[label].append(f"### {counters[label]}. {label} - {issue.title}\n\n{issue.body}\n\n")
 
 with open("report.md", "w") as report:
     for label in SEVERITY_LABELS:
