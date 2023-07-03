@@ -40,7 +40,7 @@ with open("report.md", "w") as report:
         title = f"{label} Findings"
         if label == "Gas":
             title = "Gas Saving Findings"
-        report.write(f"## {label}\n\n")
+        report.write(f"## {title}\n\n")
         for content in issue_dict[label]:
             report.write(content.replace("\r\n", "\n"))
     report.write(f"## Final remarks\n\nTODO")
