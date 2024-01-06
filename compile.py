@@ -19,13 +19,13 @@ SEVERITY_LABELS = ['Critical', 'High', 'Medium', 'Low', 'Gas', 'Informational']
 
 issue_dict : dict[str, list[str]] = {}
 counters: dict[str, int] = {}
-
-for issue in github.get_repo(REPO).get_issues():
-    if issue.state == 'open' and issue.pull_request is None:
+issues = github.get_repo(REPO).get_issues(state='open')
+for issue in issues.reversed:
+    if issue.pull_request is None:
         # filter issue labels for only severity labels
         severity_labels_in_issue = [label.name for label in issue.labels if label.name in SEVERITY_LABELS]
 
-        assert len(severity_labels_in_issue) == 1, f"Issue {issue.html_url} has more than one (or no) severity label."
+        assert len(severity_labels_in_issue) == 1, f"Issue {issue.html_url} has {len(severity_labels_in_issue)} severity label."
         label = issue.labels[0].name
         if label not in issue_dict:
            issue_dict[label] = []
