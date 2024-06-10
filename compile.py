@@ -41,12 +41,13 @@ for i in range(issues_list.totalCount//30, -1, -1):
 
 with open("report.md", "w") as report:
     for label in SEVERITY_LABELS:
-        if label not in issue_dict:
-            continue
         title = f"{label} Findings"
         if label == "Gas":
             title = "Gas Saving Findings"
         report.write(f"## {title}\n\n")
+        if label not in issue_dict:
+            report.write("None\n")
+            continue
         for content in issue_dict[label]:
             report.write(content.replace("\r\n", "\n"))
     report.write(f"## Final remarks\n\nTODO")

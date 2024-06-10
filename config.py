@@ -8,6 +8,6 @@ check the "repo" option: full control of private repositories.
 TODO may be possible to decrease the permissions further.
 """
 
-TOKEN = "change-this-to-your-personal-access-token"
+TOKEN = ""
 
-REPO = "spearbit-audits/change-the-name"
+REPO = ""
