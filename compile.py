@@ -46,7 +46,7 @@ with open("report.md", "w") as report:
             title = "Gas Saving Findings"
         report.write(f"## {title}\n\n")
         if label not in issue_dict:
-            report.write("None\n")
+            report.write("None.\n\n")
             continue
         for content in issue_dict[label]:
             report.write(content.replace("\r\n", "\n"))
